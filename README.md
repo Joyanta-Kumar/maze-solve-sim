@@ -10,11 +10,11 @@ A maze generation and solving simulation built with `python` and `python-pygame`
 
 ## Project Structure
 
-maze/
-|
-|-- main.py
-|-- cell.py      # Cell calss with wall and state definitions
-|-- constant.py  # Constants, colors, grid settings
+maze/  
+|  
+|-- main.py  
+|-- cell.py      # Cell calss with wall and state definitions  
+|-- constant.py  # Constants, colors, grid settings  
 
 
 ## Requirements
