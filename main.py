@@ -75,7 +75,8 @@ while run:
     for cell in row:
       cell.draw(WINDOW)
       if (cell == current_cell):
-        current_cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=10, border=False)
+        cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=10, border=False)
+        cell.visited = True
   
   neighbors = get_neighbors(current_cell)
   if len(neighbors) != 0:
