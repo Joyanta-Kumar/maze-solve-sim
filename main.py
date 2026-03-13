@@ -1,5 +1,5 @@
 import pygame
-from cell import Cell, Wall
+from cell import Cell
 from constant import BG_COLOR, CURRENT_CELL_COLOR, COLS, ROWS, WINDOW, FPS
 from random import choice
 
@@ -53,10 +53,9 @@ while run:
 
   for row in grid:
     for cell in row:
+      cell.draw(WINDOW)
       if (cell == current_cell):
-        current_cell.draw(WINDOW, CURRENT_CELL_COLOR)
-      else:
-        cell.draw(WINDOW)
+        current_cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=10, border=False)
 
   # swaping the backstage with the front
   pygame.display.flip()
