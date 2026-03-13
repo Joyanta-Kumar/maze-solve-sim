@@ -1,7 +1,7 @@
 import pygame
 from cell import Cell
-from constant import BG_COLOR, CURRENT_CELL_COLOR, COLS, ROWS, WINDOW, FPS
-from random import choice
+from constant import BG_COLOR, CURRENT_CELL_COLOR, COLS, ROWS, WINDOW, FPS, NEIGHBOR_CELL_COLOR
+from random import choice, randint
 
 pygame.init()
 pygame.display.set_caption("Maze Sim")
@@ -21,7 +21,27 @@ for row in grid:
     print([current_cell.row, current_cell.col], end="\t")
   print()
 
-current_cell = grid[2][3]
+
+def get_neighbors(cell: Cell) -> list:
+  neighbors = []
+  # Left
+  if cell.col > 0:
+    neighbors.append(grid[cell.row][cell.col-1])
+  # Right
+  if cell.col < COLS-1:
+    neighbors.append(grid[cell.row][cell.col+1])
+  # Top
+  if cell.row > 0:
+    neighbors.append(grid[cell.row-1][cell.col])
+  # Bottom
+  if cell.row < ROWS-1:
+    neighbors.append(grid[cell.row+1][cell.col])
+  return neighbors;
+
+
+
+
+current_cell = grid[randint(0, ROWS-1)][randint(0, COLS-1)]
 
 run = True
 while run:
@@ -56,6 +76,11 @@ while run:
       cell.draw(WINDOW)
       if (cell == current_cell):
         current_cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=10, border=False)
+  
+  neighbors = get_neighbors(current_cell)
+  if len(neighbors) != 0:
+    for neighbor in neighbors:
+      neighbor.draw(WINDOW, NEIGHBOR_CELL_COLOR, padding=20, border=False)
 
   # swaping the backstage with the front
   pygame.display.flip()
