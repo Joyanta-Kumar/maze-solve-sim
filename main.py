@@ -1,5 +1,5 @@
 import pygame
-from cell import Cell
+from cell import Cell, Wall
 from constant import BG_COLOR, CURRENT_CELL_COLOR, COLS, ROWS, WINDOW, FPS, NEIGHBOR_CELL_COLOR
 from random import choice, randint
 
@@ -47,6 +47,27 @@ def get_neighbors(cell: Cell) -> list:
   return neighbors;
 
 
+def break_wall(current: Cell, next: Cell):
+  if current.row == next.row:
+    # left or right
+    if current.col < next.col:
+      # right
+      current.walls[Wall.RIGHT] = False
+      next.walls[Wall.LEFT] = False
+    else:
+      #left
+      current.walls[Wall.LEFT] = False
+      next.walls[Wall.RIGHT] = False
+  elif current.col == next.col:
+    # top or bottom
+    if current.row < next.row:
+      # bottom
+      current.walls[Wall.BOTTOM] = False
+      next.walls[Wall.TOP] = False
+    else:
+      # top
+      current.walls[Wall.TOP] = False
+      next.walls[Wall.BOTTOM] = False
 
 
 current_cell = grid[randint(0, ROWS-1)][randint(0, COLS-1)]
@@ -89,13 +110,18 @@ while run:
         cell.visited = True
   
   neighbors = get_neighbors(current_cell)
+  next_cell = None
   if len(neighbors) != 0:
     for neighbor in neighbors:
       neighbor.draw(WINDOW, NEIGHBOR_CELL_COLOR, padding=20, border=False)
       stack.append(current_cell)
-    current_cell = choice(neighbors)
+    next_cell = choice(neighbors)
+    break_wall(current_cell, next_cell)
   elif len(stack) != 0:
-    current_cell = stack.pop()
+    next_cell = stack.pop()
+  
+  if next_cell:
+    current_cell = next_cell
 
   # swaping the backstage with the front
   pygame.display.flip()
