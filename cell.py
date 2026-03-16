@@ -1,6 +1,6 @@
 import pygame
 from enum import IntEnum
-from constant import WALL_COLOR, FLOOR_COLOR, VISITED_CELL_COLOR, CELL_SIZE
+from constant import WALL_COLOR, CELL_SIZE
 
 class Wall(IntEnum):
   TOP = 0
@@ -16,15 +16,14 @@ class Cell:
     self.walls = [True, True, True, True] # top, left, bottom, right
     self.visited = False
 
-  def draw(self, window, color=FLOOR_COLOR, offset_x=10, offset_y=10, padding=0, border=True):
+  def draw(self, window, color, offset_x=10, offset_y=10, padding=0, wall=True):
     x = offset_x + self.col * CELL_SIZE
     y = offset_y + self.row * CELL_SIZE
-    if color == FLOOR_COLOR and self.visited:
-      color = VISITED_CELL_COLOR
+
     pygame.draw.rect(window, color, (x+padding, y+padding, CELL_SIZE-padding*2, CELL_SIZE-padding*2))
 
     # Drawing the walls
-    if border:
+    if wall:
       if self.walls[Wall.TOP]:
         pygame.draw.line(window, WALL_COLOR, (x, y), (x+CELL_SIZE, y))
       if self.walls[Wall.BOTTOM]:
@@ -35,6 +34,10 @@ class Cell:
         pygame.draw.line(window, WALL_COLOR, (x+CELL_SIZE, y), (x+CELL_SIZE, y+CELL_SIZE))
 
 
-
+  def __str__(self) -> str:
+    status: str = f"{self.row} {self.col}"
+    for isWall in self.walls:
+      status += f" {1 if isWall else 0}"
+    return status
 
   
