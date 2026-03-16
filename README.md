@@ -13,8 +13,10 @@ A maze generation and solving simulation built with `python` and `python-pygame`
 maze/  
 |  
 |-- main.py  
-|-- cell.py      # Cell calss with wall and state definitions  
+|-- cell.py      # Cell class with wall and state definitions  
 |-- constant.py  # Constants, colors, grid settings  
+|-- function.py
+|-- maze.py
 
 
 ## Requirements
