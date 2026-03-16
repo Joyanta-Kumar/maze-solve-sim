@@ -26,22 +26,32 @@ def get_neighbors(cell: Cell) -> list:
   neighbors = []
   # Left
   if cell.col > 0:
-    neighbors.append(grid[cell.row][cell.col-1])
+    left_cell = grid[cell.row][cell.col-1]
+    if not left_cell.visited:
+      neighbors.append(left_cell)
   # Right
   if cell.col < COLS-1:
-    neighbors.append(grid[cell.row][cell.col+1])
+    right_cell = grid[cell.row][cell.col+1]
+    if not right_cell.visited:
+      neighbors.append(right_cell)
   # Top
   if cell.row > 0:
-    neighbors.append(grid[cell.row-1][cell.col])
+    top_cell = grid[cell.row-1][cell.col]
+    if not top_cell.visited:
+      neighbors.append(top_cell)
   # Bottom
   if cell.row < ROWS-1:
-    neighbors.append(grid[cell.row+1][cell.col])
+    bottom_cell = grid[cell.row+1][cell.col]
+    if not bottom_cell.visited:
+      neighbors.append(bottom_cell)
   return neighbors;
 
 
 
 
 current_cell = grid[randint(0, ROWS-1)][randint(0, COLS-1)]
+
+stack = []
 
 run = True
 while run:
@@ -82,6 +92,10 @@ while run:
   if len(neighbors) != 0:
     for neighbor in neighbors:
       neighbor.draw(WINDOW, NEIGHBOR_CELL_COLOR, padding=20, border=False)
+      stack.append(current_cell)
+    current_cell = choice(neighbors)
+  elif len(stack) != 0:
+    current_cell = stack.pop()
 
   # swaping the backstage with the front
   pygame.display.flip()
