@@ -59,14 +59,14 @@ while run:
 
 
   WINDOW.fill(BG_COLOR)
-  # maze.draw(WINDOW)
+  maze.draw(WINDOW)
   for row in maze.grid:
     for cell in row:
       if cell.visited:
         cell.draw(WINDOW)
   
   if current_cell:
-    current_cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=10, wall=False)
+    current_cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=2, wall=False)
 
   graph.draw(WINDOW)
 
