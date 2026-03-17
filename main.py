@@ -43,7 +43,7 @@ while run:
       current_cell.visited = True
       maze.visited_cell_count += 1
       graph.add_node(Node(current_cell.row, current_cell.col))
-      stop_condition = maze.visited_cell_count == maze.cell_count or current_cell == maze.grid[maze.rows-1][maze.cols-1]
+      stop_condition = maze.visited_cell_count == maze.cell_count or current_cell == maze.grid[maze.rows//2][maze.cols//2]
 
     neighbors = get_neighbors(current_cell, maze.grid, ignore_walls=False)
     if len(neighbors) != 0:
