@@ -1,4 +1,4 @@
-from cell import Cell, Wall
+from view.cell import Cell, Wall
 from function import get_neighbors, break_wall
 from random import choice
 

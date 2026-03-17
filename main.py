@@ -2,7 +2,7 @@ import pygame
 from constant import WINDOW, CLOCK, FPS
 from constant import COLS, ROWS
 from constant import BG_COLOR, CELL_COLOR, VISITED_CELL_COLOR, CURRENT_CELL_COLOR, STACK_CELL_COLOR
-from maze import Maze
+from view.maze import Maze
 from function import get_neighbors
 from random import choice
 

@@ -1,4 +1,4 @@
-from cell import Cell, Wall
+from view.cell import Cell, Wall
 from constant import ROWS, COLS
 
 def get_neighbors(cell, grid: list, ignore_walls=False) -> list:
