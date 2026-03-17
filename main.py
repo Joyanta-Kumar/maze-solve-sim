@@ -11,10 +11,26 @@ pygame.display.set_caption("Maze Sim")
 
 maze = Maze(ROWS, COLS)
 
-neighbors = []
 next_cell = maze.grid[0][0]
-current_cell = None
 queue = []
+
+
+while maze.visited_cell_count != maze.cell_count:
+  current_cell = next_cell
+  if not current_cell.visited:
+    current_cell.visited = True
+    maze.visited_cell_count += 1
+
+  neighbors = get_neighbors(current_cell, maze.grid, ignore_walls=True)
+  if len(neighbors) != 0:
+    next_cell = choice(neighbors)
+    break_wall(current_cell, next_cell)
+    if len(neighbors) > 1:
+      queue.insert(1, current_cell)
+  elif len(queue) != 0:
+    next_cell = queue.pop()
+  
+
 
 run = True
 while run:
@@ -26,47 +42,14 @@ while run:
         run = False
       elif event.key == pygame.K_SPACE:
         pass
-  
 
-  if maze.visited_cell_count != maze.cell_count:
-    break_wall(current_cell, next_cell)
-    current_cell = next_cell
-
-    if not current_cell.visited:
-      current_cell.visited = True
-      maze.visited_cell_count += 1
-    
-    neighbors = get_neighbors(current_cell, maze.grid, ignore_walls=True)
-    if len(neighbors) != 0:
-      next_cell = choice(neighbors)
-      if len(neighbors) > 1:
-        queue.insert(1, current_cell)
-
-    elif len(queue) != 0:
-      next_cell = queue.pop()
-    print(maze)
-  else:
-    current_cell = None
-    next_cell = None
-    neighbors = []
 
   WINDOW.fill(BG_COLOR)
 
   for row in maze.grid:
-    for cell in row:
-      if cell.visited:
-        cell.draw(WINDOW, VISITED_CELL_COLOR)
-      else:
-        cell.draw(WINDOW, CELL_COLOR)
+    for cell in row: 
 
-  if current_cell:
-    current_cell.draw(WINDOW, CURRENT_CELL_COLOR, wall=False)
-
-  for neighbor in neighbors:
-    neighbor.draw(WINDOW, NEIGHBOR_CELL_COLOR, padding=20, wall=False)
-  
-  if next_cell:
-    next_cell.draw(WINDOW, NEXT_CELL_COLOR, padding=10, wall=False)
+      cell.draw(WINDOW, VISITED_CELL_COLOR)
 
   pygame.display.flip()
   CLOCK.tick(FPS)
