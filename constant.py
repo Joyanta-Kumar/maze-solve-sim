@@ -25,7 +25,7 @@ CURRENT_CELL_COLOR = YELLOW
 STACK_CELL_COLOR = SUBTEXT
 
 # Grid
-CELL_SIZE = 30
+CELL_SIZE = 100
 
 # Window
 WINDOW_WIDTH = 1420
@@ -36,7 +36,7 @@ ROWS = WINDOW_HEIGHT // CELL_SIZE
 
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
-FPS = 60
+FPS = 12
 
 
 CLOCK = pygame.time.Clock()
