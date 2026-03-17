@@ -1,4 +1,4 @@
-from constant import WINDOW_PADDING, CELL_SIZE
+from constant import WINDOW_PADDING, CELL_SIZE, NODE_COLOR
 import pygame
 
 class Node:
@@ -6,7 +6,7 @@ class Node:
     self.row:int = row
     self.col:int = col
 
-  def draw(self, window, color, offset_x=WINDOW_PADDING, offset_y=WINDOW_PADDING):
+  def draw(self, window, color=NODE_COLOR, offset_x=WINDOW_PADDING, offset_y=WINDOW_PADDING):
     x = self.col*CELL_SIZE+offset_x + CELL_SIZE // 2
     y = self.row*CELL_SIZE+offset_y + CELL_SIZE // 2
     pygame.draw.circle(window, color, (x, y), 4)

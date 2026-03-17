@@ -7,20 +7,19 @@ from function import get_neighbors
 from random import choice
 from structure.node import Node
 from structure.edge import Edge
+from structure.graph import Graph
 
 pygame.init()
 pygame.display.set_caption("Maze Sim")
 
-maze = Maze(ROWS, COLS)
+maze = Maze(ROWS, COLS, False)
+graph = Graph()
 
 next_cell = maze.grid[0][0]
-stack = []
 current_cell = None
 stop_condition = False
 neighbors = []
-
-nodes = []
-edges = []
+stack = []
 
 run = True
 while run:
@@ -31,56 +30,45 @@ while run:
       if event.key == pygame.K_ESCAPE:
         run = False
       elif event.key == pygame.K_F5:
-        maze.generate()
-        stack = []
-        current_cell = None
+        maze.generate(False)
         stop_condition = False
-        next_cell = maze.grid[0][0]
+        stack = []
         neighbors = []
-        nodes = []
-        edges = []
-  
+        graph.reset()
+        next_cell = maze.grid[0][0]
+
   if not stop_condition:
     current_cell = next_cell
     if not current_cell.visited:
       current_cell.visited = True
       maze.visited_cell_count += 1
-      nodes.append(Node(current_cell.row, current_cell.col))
-      stop_condition = maze.visited_cell_count == maze.cell_count
+      graph.add_node(Node(current_cell.row, current_cell.col))
+      stop_condition = maze.visited_cell_count == maze.cell_count or current_cell == maze.grid[maze.rows-1][maze.cols-1]
 
     neighbors = get_neighbors(current_cell, maze.grid, ignore_walls=False)
     if len(neighbors) != 0:
-        next_cell = choice(neighbors)
-        edges.append(Edge(current_cell, next_cell))
-        if len(neighbors) > 1:
-          stack.append(current_cell)
-    elif len(stack) != 0 and not stop_condition:
+      if len(neighbors) > 1:
+        stack.append(current_cell)
+      next_cell = choice(neighbors)
+      for neighbor in neighbors:
+        if not neighbor.visited:
+          graph.add_node(Node(neighbor.row, neighbor.col))
+          graph.add_edge(Edge(current_cell, neighbor))
+    elif len(stack) != 0:
       next_cell = stack.pop()
 
-  WINDOW.fill(BG_COLOR)
 
+  WINDOW.fill(BG_COLOR)
+  # maze.draw(WINDOW)
   for row in maze.grid:
     for cell in row:
       if cell.visited:
-        cell.draw(WINDOW, CELL_COLOR)
+        cell.draw(WINDOW)
   
-  for cell in stack:
-    cell.draw(WINDOW, STACK_CELL_COLOR, padding=10, wall=False)
-
-  for cell in neighbors:
-    cell.draw(WINDOW, NEIGHBOR_CELL_COLOR, padding=0, wall=False)
-
   if current_cell:
-    current_cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=0, wall=False)
-  
-  if next_cell:
-    next_cell.draw(WINDOW, NEXT_CELL_COLOR, padding=0, wall=False)
-  
-  for node in nodes:
-    node.draw(WINDOW, NODE_COLOR)
-  
-  for edge in edges:
-    edge.draw(WINDOW, NODE_COLOR)
+    current_cell.draw(WINDOW, CURRENT_CELL_COLOR, padding=10, wall=False)
+
+  graph.draw(WINDOW)
 
   pygame.display.flip()
   CLOCK.tick(FPS)

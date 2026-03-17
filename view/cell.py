@@ -1,6 +1,6 @@
 import pygame
 from enum import IntEnum
-from constant import WALL_COLOR, CELL_SIZE, WINDOW_PADDING
+from constant import WALL_COLOR, CELL_SIZE, WINDOW_PADDING, CELL_COLOR
 
 class Wall(IntEnum):
   TOP = 0
@@ -16,7 +16,7 @@ class Cell:
     self.walls = [True, True, True, True] # top, left, bottom, right
     self.visited = False
 
-  def draw(self, window, color, offset_x=WINDOW_PADDING, offset_y=WINDOW_PADDING, padding=0, wall=True):
+  def draw(self, window, color=CELL_COLOR, offset_x=WINDOW_PADDING, offset_y=WINDOW_PADDING, padding=0, wall=True):
     x = offset_x + self.col * CELL_SIZE
     y = offset_y + self.row * CELL_SIZE
 
