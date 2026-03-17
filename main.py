@@ -12,7 +12,7 @@ pygame.display.set_caption("Maze Sim")
 maze = Maze(ROWS, COLS)
 
 next_cell = maze.grid[0][0]
-queue = []
+stack = []
 current_cell = None
 stop_condition = False
 neighbors = []
@@ -27,7 +27,7 @@ while run:
         run = False
       elif event.key == pygame.K_F5:
         maze.generate()
-        queue = []
+        stack = []
         current_cell = None
         stop_condition = False
         next_cell = maze.grid[0][0]
@@ -44,9 +44,9 @@ while run:
     if len(neighbors) != 0:
         next_cell = choice(neighbors)
         if len(neighbors) > 1:
-          queue.insert(0, current_cell)
-    elif len(queue) != 0 and not stop_condition:
-      next_cell = queue.pop()
+          stack.append(current_cell)
+    elif len(stack) != 0 and not stop_condition:
+      next_cell = stack.pop()
 
   WINDOW.fill(BG_COLOR)
 
@@ -55,7 +55,7 @@ while run:
       if cell.visited:
         cell.draw(WINDOW, VISITED_CELL_COLOR if cell.visited else CELL_COLOR)
   
-  for cell in queue:
+  for cell in stack:
     cell.draw(WINDOW, STACK_CELL_COLOR, padding=0, wall=False)
 
   for cell in neighbors:
