@@ -21,7 +21,6 @@ while run:
         run = False
       elif event.key == pygame.K_g:
         maze.generate()
-        graph.fetch(maze)
 
   WINDOW.fill(BG_COLOR)  
   maze.draw()

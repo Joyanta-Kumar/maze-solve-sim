@@ -57,6 +57,7 @@ class Maze:
       cell_data = ""
       grid_row = []
       last_row_number = 0
+      cell = None
 
       for line in file:
         cell_data = line.strip("\n").split(" ")
@@ -74,7 +75,6 @@ class Maze:
         cell.walls[Wall.LEFT] = wall_data[Wall.LEFT] == "1"
         cell.walls[Wall.BOTTOM] = wall_data[Wall.BOTTOM] == "1"
         cell.walls[Wall.RIGHT] = wall_data[Wall.RIGHT] == "1"
-
         grid_row.append(cell)
       
           
