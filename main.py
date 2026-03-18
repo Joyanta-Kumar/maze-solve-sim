@@ -3,7 +3,7 @@ from constant import WINDOW, CLOCK, FPS
 from constant import COLS, ROWS
 from constant import BG_COLOR, CELL_COLOR, VISITED_CELL_COLOR, CURRENT_CELL_COLOR, STACK_CELL_COLOR, NEXT_CELL_COLOR, NEIGHBOR_CELL_COLOR, NODE_COLOR
 from view.maze import Maze
-from function import get_neighbors
+from utils.function import get_neighbors
 from random import choice
 from structure.node import Node
 from structure.edge import Edge

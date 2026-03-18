@@ -1,5 +1,5 @@
 from view.cell import Cell, Wall
-from function import get_neighbors, break_wall
+from utils.function import break_wall, get_neighbors
 from random import choice, randint
 import pygame
 from constant import CELL_COLOR
